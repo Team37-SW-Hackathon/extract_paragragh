@@ -15,7 +15,6 @@ def extract_main(page):
 
 
 
-
 def start_kor():
   reader = PdfReader(PDF_FILE_PATH)
   pages = reader.pages
@@ -25,11 +24,13 @@ def start_kor():
       cnt +=1
       if(cnt>0):
         sub = page.extract_text()
+        sub = sub.replace('\n','')
         print(sub)
-        #sun = re.findall(r"[]")
         #paragraph = extract_main(sub)
         #paragraphs.append(paragraph)
         print("\n\n\n------------------------------------------------------")
 
   return {'paragraphs':paragraphs}
+
+
 start_kor()

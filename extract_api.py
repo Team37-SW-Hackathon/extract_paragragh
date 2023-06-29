@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from extract_eng import start_eng, test
+from extract_kor import start_kor
 
 
 
@@ -16,4 +17,4 @@ def get_home():
 
 @app.get("/kor")
 def get_pargraph():
-    return start_eng()
+    return start_kor()

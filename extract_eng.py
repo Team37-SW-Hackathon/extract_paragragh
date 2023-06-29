@@ -2,18 +2,20 @@ import openai
 from PyPDF2 import PdfReader
 import json
 
-PDF_FILE_PATH = "./data/kor1.pdf"
+PDF_FILE_PATH = "./data/eng.pdf"
 
 with open('./secret.json') as f:
     secrets = json.loads(f.read())
-DB_API_KEY = secrets['API_KEY']
+DB_API_KEY = secrets["API_KEY"]
+
+
+
 
 def extract_main(page):
-
   openai.api_key = DB_API_KEY
 
   text = f"""{page}"""
-  instruction = f"""아래에서 영어 지문을 찾아줘.영어 지문은 3개 이상의 연속된 영어 문장으로 이루어져 있는 문단을 의미해. 영어지문은 한글을 포함하지 않아.선지는 1,2,3,4,5 번으로 이루어져 있고 지문 다음에 위치해, 선지는 지문이 아니야.아래에는 0~2개의 영어 지문이 존재할 수 있어.영어지문만 출력해. 문장 중간의 "/n"는 빼고 출력해줘.영어지문이 없다면 아무것도 출력하지마. \n\n\n{text}"""
+  instruction = f"""아래에서 영어 지문을 찾아줘.영어 지문은 3개 이상의 연속된 영어 문장으로 이루어져 있는 문단을 의미해. 영어지문은 한글을 포함하지 않아.선지는 1,2,3,4,5 번으로 이루어져 있고 지문 다음에 위치해, 선지는 지문이 아니야.아래에는 0~2개의 영어 지문이 존재할 수 있어.영어지문만 그대로 출력해. 영어지문이 없다면 아무것도 출력하지마.\n\n\n{text}"""
  
   model="gpt-3.5-turbo"
   messages=[{"role": "user", "content":instruction}]
@@ -43,9 +45,12 @@ def start_eng():
       cnt +=1
       if(cnt>=12 and cnt<14):
         sub = page.extract_text()
-        print(sub)
-        #paragraph = extract_main(sub)
-        #paragraphs.append(paragraph)
+        paragraph = extract_main(sub)
+        
+        paragraph = paragraph.split('\n\n')
+        for i in range(len([paragraph])):
+          paragraph[i] = paragraph[i].replace('\n','')
+          paragraphs.append(paragraph[i])
         print("\n\n\n------------------------------------------------------")
 
   return {'paragraphs':paragraphs}

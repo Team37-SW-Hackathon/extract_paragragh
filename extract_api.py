@@ -27,4 +27,6 @@ def get_pargraph():
 @app.post("/extract")
 def ext_paragraph(file: UploadFile):
     path=f"./data/{file.filename}"
+    print(file.filename)
+    path="./data/sample.pdf"
     return start_eng(path)

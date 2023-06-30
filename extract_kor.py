@@ -31,6 +31,3 @@ def start_kor():
         print("\n\n\n------------------------------------------------------")
 
   return {'paragraphs':paragraphs}
-
-
-start_kor()

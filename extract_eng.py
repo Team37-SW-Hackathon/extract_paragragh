@@ -36,8 +36,8 @@ def extract_main(page):
 
 
 
-def start_eng():
-  reader = PdfReader(PDF_FILE_PATH)
+def start_eng(path):
+  reader = PdfReader(path)
   pages = reader.pages
   cnt=0
   paragraphs = []
